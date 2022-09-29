@@ -76,13 +76,14 @@ font-family: 'Roboto', sans-serif;
 text-align: left;
 
 `
+
 function Login() {
 
   const [userInput, setUserInput] = useState<String | null>("");
   const [passInput, setPassInput] = useState<String| null>("");
   const [isLoggedin, setIsLoggedin] = useState<Boolean>(false);
   const [isLoading,setIsLoading] = useState<Boolean>(false)
-  const [error, setError] = useState<Boolean>(false);
+  const [error, setError] = useState<String | null>("");
   const [count, setCount] = useState(0);
   const [auth, setAuth] = useState<String | null>("");
   
@@ -102,27 +103,7 @@ function Login() {
   const submitHandler = (event: React.MouseEvent<HTMLButtonElement>):void => {
 
     event.preventDefault();
-    setIsLoading(true);
-    console.log("submit handler içindeki loading true oldu")
-    setCurrentUser(
-      prev => {
-        return {...prev,
-        username: userInput,
-        password: passInput}
-      }
-    );
-    console.log("submit handler içindeki loading true oldu")
-    setCount(prev=>prev+1)
-
-    console.log(currentUser);
-    
-
-  }
-  
-   useEffect(() => {
-
-    console.log("yükleniyor...");
-  
+    setIsLoading(true);  
      axios.post("https://reqres.in/api/login",
     
     {
@@ -136,56 +117,54 @@ function Login() {
   
         console.log("user exists");
         setIsLoading(false);
-        console.log("yüklenme tamamlandı");
-  
-        setIsLoggedin(true)
+          setIsLoggedin(true)
         setAuth(response.data.token)
-        setCount(prev=>prev+1)
-
       }
        else {
         setIsLoading(false);
-        console.log("yüklendi ancak hata oluştu");
         setAuth(null)
-        console.log("user does not exist");
-      
         setIsLoggedin(false);
-        setCount(prev=>prev+1)
-
+       
       }
   
        })
         
   .catch((error:any) => {
       
-    setAuth(prev => prev) 
+    setError("username or password is incorrect")
+
+setAuth(prev => prev) 
       setIsLoggedin(false)
       setIsLoading(false);
-  
-      console.log(error + " hata")
-      setCount(prev=>prev+1)
-  
+    
     }
     )
+    .finally(() => {
+setIsLoading(false);
+    })
     
-  }, [currentUser.username, currentUser.password])
-    
+  }
+  useEffect(() => {
      if (isLoggedin)   {
 
       const timer = setTimeout(() => {
   
       console.log("redirecting to profile page");
-       navigate(`users/${userInput}`, {state: currentUser});
+      console.log(currentUser)
+       navigate(`users/${currentUser.username}`, {state: { currentUser: currentUser, auth: auth }});
       }, 2000);
 
-      clearTimeout(timer);
+      return () => clearTimeout(timer);
       
     }
+  }, [isLoggedin,auth])
 
- 
-  
-
-
+  const handleUserInput = (event: React.ChangeEvent<HTMLInputElement>):void => {
+    setCurrentUser(prev => ({...prev, username: event.target.value}))
+  }
+  const handlePassInput = (event: React.ChangeEvent<HTMLInputElement>):void => {
+    setCurrentUser(prev => ({...prev, password: event.target.value}))
+  }
 
   return (
     <div>
@@ -193,23 +172,30 @@ function Login() {
 <Form >
   
    <LoginContainer>
+   <div style = {{}} >
+      {error && <div style={{ color: "red" }}>{error}</div>}
+      {isLoggedin && (
+        <div style={{ color: "green" }}>Logged in with token "{auth}"!</div>
+      )}
+
+</div>
 
    <LoginImageContainer>
   <LoginImage src= {require('../right.png')}/>
   </LoginImageContainer>
-
+  
 
   <LoginTitle>Login your account</LoginTitle>
 
   <InputContainer>
   
   <FaUserCircle fontSize  = "30px" color = "#747474" style = {{position: "absolute", top: "50%", transform: "translateY(-50%)", left: "20px"}}/> 
-<LoginInput onChange = {(e:React.ChangeEvent<HTMLInputElement>)=> setUserInput(e.target.value)} placeholder = "Username"/>
+<LoginInput onChange = {handleUserInput} placeholder = "Username"/>
 </InputContainer>
 
 <InputContainer>
 <RiKeyFill style={{left:"20px" , top: "50%",transform:"translateY(-75%)", color: "#747474" ,fontSize:"32px", position:"absolute",}}/>
-  <LoginInput onChange = {(e:React.ChangeEvent<HTMLInputElement>)=> setPassInput(e.target.value)} style = {{marginBottom:"20px"}} placeholder = "Password"/>
+  <LoginInput onChange = {handlePassInput} style = {{marginBottom:"20px"}} placeholder = "Password"/>
 
   </InputContainer>
 
