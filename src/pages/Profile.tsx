@@ -23,6 +23,7 @@ console.log(auth)
 }, [])
 
 useEffect(() => {
+  //satır oluştu commit için//
 
     setAuth(prev => {
 
