@@ -1,56 +1,42 @@
 import React, { useEffect } from 'react'
 import {Outlet} from 'react-router-dom';
 
-import {useLocation} from 'react-router-dom';
+
 import { useLocalStorage } from  'usehooks-ts';
 
 import {useState} from 'react';
 import NavbarCom from '../components/NavbarCom';
+import {useSelector} from 'react-redux';
+
+
 
 function Profile() {
+
+  const auth = useSelector((state:any) => state.auth);
+  const {user, isAuthenticated, token} = auth;
+
     
-const location = useLocation();
-
-const userData = location.state.currentUser;
-const token:String = location.state.auth;
-
-const [auth, setAuth] = useLocalStorage("auth", token);
-
-
-useEffect(() => {
-console.log(auth)
-
-}, [])
-
 useEffect(() => {
   
+console.log(user, isAuthenticated, token)
 
-    setAuth(prev => {
-
-        return {...prev, auth: token}
-        
-        }
-        
-      )
-      console.log(auth)
-
+    
 }, [])
  
 
   return (
     <div>
       
- {auth? 
+ {token? 
  
  <section>
 
      <nav>
       <NavbarCom/>
       </nav>
-        <h1>profile page</h1>
-        <h2>username: {userData.username}</h2>
+        <h1>profile page: {token}</h1>
+        <h2>username: {user}</h2>
         <h2>
-         
         </h2>
 
         </section>

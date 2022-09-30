@@ -16,6 +16,7 @@ import Home from './Home';
 import Profile from './Profile';
 import App from '../App';
 import NavbarCom from '../components/NavbarCom';
+import { login } from '../redux/authSlice';
 
 const LoginImage = styled.img`
 
@@ -86,6 +87,10 @@ function Login() {
   const [error, setError] = useState<String | null>("");
   const [count, setCount] = useState(0);
   const [auth, setAuth] = useState<String | null>("");
+  const {useDispatch} = require('react-redux');
+
+  const dispatch = useDispatch();
+
   
     const navigate = useNavigate();
 
@@ -119,6 +124,12 @@ function Login() {
         setIsLoading(false);
           setIsLoggedin(true)
         setAuth(response.data.token)
+        dispatch(login({
+          token: response.data.token,
+          user: currentUser.username,
+          isAuthenticated: isLoggedin
+
+        }))
       }
        else {
         setIsLoading(false);
@@ -151,7 +162,7 @@ setIsLoading(false);
   
       console.log("redirecting to profile page");
       console.log(currentUser)
-       navigate(`users/${currentUser.username}`, {state: { currentUser: currentUser, auth: auth }});
+       navigate(`users/${currentUser.username}`);
       }, 2000);
 
       return () => clearTimeout(timer);
