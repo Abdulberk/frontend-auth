@@ -9,7 +9,6 @@ function Feeds() {
         <NavbarCom/>
         </nav>
         
-
     <MyFeeds/>
 
     </div>

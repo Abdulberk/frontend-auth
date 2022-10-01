@@ -7,8 +7,6 @@ import Home from './pages/Home';
 import Profile from './pages/Profile';
 import Feeds from './components/MyFeeds';
 
-
-
 function App() {
   return (
     <div>

@@ -77,7 +77,6 @@ font-family: 'Roboto', sans-serif;
 text-align: left;
 
 `
-
 function Login() {
 
   const [userInput, setUserInput] = useState<String | null>("");
@@ -91,7 +90,6 @@ function Login() {
 
   const dispatch = useDispatch();
 
-  
     const navigate = useNavigate();
 
     type User = {

@@ -1,33 +1,22 @@
 import React, { useEffect } from 'react'
 import {Outlet} from 'react-router-dom';
 
-
-import { useLocalStorage } from  'usehooks-ts';
-
 import {useState} from 'react';
 import NavbarCom from '../components/NavbarCom';
 import {useSelector} from 'react-redux';
-
-
+import {useLocalStorage} from 'usehooks-ts';
+import {Link} from 'react-router-dom';
+import {useDispatch} from 'react-redux';
 
 function Profile() {
 
   const auth = useSelector((state:any) => state.auth);
   const {user, isAuthenticated, token} = auth;
 
-    
-useEffect(() => {
-  
-console.log(user, isAuthenticated, token)
-
-    
-}, [])
- 
-
   return (
     <div>
       
- {token? 
+ {token?
  
  <section>
 
