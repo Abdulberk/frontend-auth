@@ -14,8 +14,6 @@ border-radius: 10px;
 box-shadow: 0 0 2px 0 rgba(0,0,0,0.5);
 
 `
-
-
 const FeedsTitle = styled.h1`
 font-size: 1.5rem;
 `
@@ -24,9 +22,6 @@ const FeedsImageContainer = styled.div``
 const FeedsText = styled.p``
 
 const FeedsContainer = styled.div``
-
-
-
 
 function MyFeeds() {
 
@@ -69,7 +64,6 @@ setIsLoading(true);
 getFeeds();
 
     }, [ ])
-
 
 
   return (
