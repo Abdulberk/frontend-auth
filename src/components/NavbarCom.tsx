@@ -2,9 +2,15 @@ import React from 'react'
 import Navbar from 'react-bootstrap/Navbar'
 import Container from 'react-bootstrap/Container';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Link } from 'react-router-dom';
+import {useDispatch, useSelector} from 'react-redux';
 
 
 function NavbarCom() {
+
+  const auth = useSelector((state:any) => state.auth);
+  const {user, isAuthenticated, token, userRoute} = auth;
+  
   return (
     <div>
 <Navbar style = {{backgroundColor: "#7FBCD2"}}>
@@ -12,9 +18,9 @@ function NavbarCom() {
         <Navbar.Brand href="#home">Right&Above App</Navbar.Brand>
         <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end">
-          <Navbar.Text>
-             <a href="#login">Login</a>
-          </Navbar.Text>
+          <Link to="/users/logout">Log out</Link>
+          <Link to= {`/users/${user}/myfeeds`}> My Feeds</Link>
+          <Link to="/users/profile">Profile</Link>
         </Navbar.Collapse>
       </Container>
     </Navbar>

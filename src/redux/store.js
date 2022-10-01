@@ -11,9 +11,6 @@ const persistConfig = {
 }
 
 const persistedReducer = persistReducer(persistConfig, authReducer);
- 
-
-
 let store = configureStore({
     reducer: {
         auth: persistedReducer

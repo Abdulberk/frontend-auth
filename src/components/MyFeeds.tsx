@@ -3,8 +3,6 @@ import styled, {StyledInterface, StyledComponent} from 'styled-components'
 import {useEffect, useState} from 'react';
 import axios, { AxiosResponse } from 'axios';
 
-
-
 const FeedsMainContainer = styled.div`
 display:flex;
 flex-direction:column;
@@ -16,6 +14,7 @@ border-radius: 10px;
 box-shadow: 0 0 2px 0 rgba(0,0,0,0.5);
 
 `
+
 
 const FeedsTitle = styled.h1`
 font-size: 1.5rem;

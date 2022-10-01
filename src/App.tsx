@@ -6,7 +6,6 @@ import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
 import Feeds from './components/MyFeeds';
-
 function App() {
   return (
     <div>
@@ -16,7 +15,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home/>} />
         <Route path="users/:id" element={<Profile/>} />
-        <Route path="users/:id/myfeeds" element={<Feeds/>} />
+        <Route path="users/:id/myfeeds" element={<Feeds/>}/>
+        <Route path = "users/logout" element={<Login/>}/>
         <Route path="*" element={<h1>404 not found</h1>} />
       </Routes>
 

@@ -11,7 +11,7 @@ import {useDispatch} from 'react-redux';
 function Profile() {
 
   const auth = useSelector((state:any) => state.auth);
-  const {user, isAuthenticated, token} = auth;
+  const {user, isAuthenticated, token, userRoute} = auth;
 
   return (
     <div>
