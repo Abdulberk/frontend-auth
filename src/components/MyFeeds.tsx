@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import styled, {StyledInterface, StyledComponent} from 'styled-components'
 import {useEffect, useState} from 'react';
 import axios, { AxiosResponse } from 'axios';
+import {useMemo} from 'react';
 
 const FeedsMainContainer = styled.div`
 display:flex;
@@ -12,28 +13,40 @@ margin-top: 50px;
 background-color: #F7ECDE;
 border-radius: 10px;
 box-shadow: 0 0 2px 0 rgba(0,0,0,0.5);
-
 `
 const FeedsTitle = styled.h1`
 font-size: 1.5rem;
 `
+
 const FeedsImage = styled.img``
 const FeedsImageContainer = styled.div``
 const FeedsText = styled.p``
 
-const FeedsContainer = styled.div``
+const FeedsContainer = styled.div`
+display:flex;
+flex-direction:row;
+width:inherit;
+margin: 0 auto;
+margin-bottom:15px;
+background-color: #F0F8FF;
+border-radius: 10px;
+
+border-bottom-style: solid;
+border-width:thick;
+`
 
 function MyFeeds() {
+  
 
     const [feeds, setFeeds] = useState<String[]>([]);
     const [isLoading,setIsLoading] = useState<Boolean>(false);
     const [error, setError] = useState<Boolean>(false);
 
+  
+useEffect(() => {
 
-const getFeeds = async ():Promise<void> =>  {
-
-setIsLoading(true);
-  await axios.get("https://6320c9689f82827dcf34503d.mockapi.io/feeds")
+  setIsLoading(true);
+  axios.get("https://6320c9689f82827dcf34503d.mockapi.io/feeds")
   .then((response: AxiosResponse) => {
     if (response.status ===200){
       setFeeds(response.data);
@@ -56,14 +69,14 @@ setIsLoading(true);
 })
 .finally(() => {
   setIsLoading(false);
+  console.log("usecallback çalıştı");
 })
 
-}
+    }
 
-    useEffect(() => {
-getFeeds();
 
-    }, [ ])
+
+,[])
 
 
   return (
@@ -78,10 +91,11 @@ getFeeds();
 
 return (
 
-<div>
-{feed.id}
+<div key = {feed.id}>
+<FeedsContainer>
 {feed.news}
 
+</FeedsContainer>
 </div>
 )
   }
