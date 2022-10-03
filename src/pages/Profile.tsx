@@ -10,7 +10,13 @@ import {useLocation} from 'react-router-dom';
 
 function UserNotFound(): JSX.Element | null {
   return (
-  <div><h1>404 User Not Found !</h1></div>
+  <div><h1>User not found!</h1></div>
+  )
+}
+function UnauthorizedUser(): JSX.Element | null {
+
+  return (
+  <div><h1>You are not authorized to see this page !</h1></div>
   )
 }
 
@@ -33,6 +39,7 @@ function Profile() {
     return (<div><UserNotFound/></div>)
 
   }
+
 
   return (
     <div>

@@ -4,12 +4,17 @@ import Container from 'react-bootstrap/Container';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
+import {useLocation} from 'react-router-dom';
 
 function NavbarCom() {
 
+  const location = useLocation();
+
+  const hostname:String = window.location.hostname;
+
   const auth = useSelector((state:any) => state.auth);
   const {user, isAuthenticated, token, userRoute} = auth;
-  
+
   return (
     <div>
 <Navbar style = {{backgroundColor: "#7FBCD2"}}>
@@ -17,7 +22,7 @@ function NavbarCom() {
         <Navbar.Brand href="/">Right&Above App</Navbar.Brand>
         <Navbar.Toggle />
 
-        {isAuthenticated?
+        {isAuthenticated? 
 
         <Navbar.Collapse className="justify-content-end">
           <Link to="/users/logout">Log out</Link>
